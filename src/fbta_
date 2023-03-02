@@ -1,0 +1,207 @@
+Calibration.cc:420:  out->Clear();
+Calibration.cc:428:  out->SetRegistr(in->GetTrigger()->GetRegistr());
+Calibration.cc:429:  out->SetTimeS800(in->GetTrigger()->GetS800());
+Calibration.cc:430:  out->SetTimeStamp(in->GetTS());
+Calibration.cc:440:  if (out->GetRegistr()==2){
+Calibration.cc:503:  out->SetPAD(pad[0],0);
+Calibration.cc:504:  out->SetPAD(pad[1],1);
+Calibration.cc:505:  out->SetPPAC(ppac[0],0);
+Calibration.cc:506:  out->SetPPAC(ppac[1],1);
+Calibration.cc:507:  out->SetIC(ich);
+Calibration.cc:508:  out->SetTOF(tof);
+Calibration.cc:509:  out->SetSCINT(scint[0],0);
+Calibration.cc:510:  out->SetSCINT(scint[1],1);
+Calibration.cc:511:  out->SetSCINT(scint[2],2);
+Calibration.cc:512:  out->SetTRACK(track);
+Calibration.cc:513:  out->SetMTDC(mtdc);
+Calibration.cc:514:  out->SetIITRACK(iitrack);
+Calibration.cc:515:  out->SetHODO(hodo);
+Calibration.cc:520:  out->Clear();
+Calibration.cc:540:  out->SetAFP(atan((x1 - x0)/gap) * 1000); // in mrad
+Calibration.cc:541:  out->SetXFP(x0 + zfp * tan(out->GetAFP()/1000)); // in mm
+Calibration.cc:542:  out->SetBFP(atan((y1 - y0) / gap) * 1000); // in mrad
+Calibration.cc:543:  out->SetYFP(y0 + zfp * tan(out->GetBFP()/1000)); // in mm
+Calibration.cc:545:  out->SetYFP(out->GetYFP()+fSett->ShiftY()); // in mm
+Calibration.cc:548:  input[0] = -out->GetXFP()/1000;
+Calibration.cc:549:  input[1] = -out->GetAFP()/1000;
+Calibration.cc:550:  input[2] = out->GetYFP()/1000;
+Calibration.cc:551:  input[3] = out->GetBFP()/1000;
+Calibration.cc:554:    out->SetATA(MapCalc(order, 0, input) * 1000); // in mrad
+Calibration.cc:555:    out->SetYTA(MapCalc(order, 1, input) * 1000); // in mm
+Calibration.cc:556:    out->SetBTA(MapCalc(order, 2, input) * 1000); // in mrad
+Calibration.cc:557:    out->SetDTA(MapCalc(order, 3, input) * 100); // in % dE/E
+Calibration.cc:561:    cout << "AFP" << atan((x1 - x0)/gap) * 1000 <<  " XFP " << (x0 + zfp * tan(out->GetAFP()/1000)) << " YFP " << (y0 + zfp * tan(out->GetBFP()/1000)) <<  " BFP " << (atan((y1 - y0) / gap) * 1000) <<endl;
+Calibration.cc:562:    cout << "out->fata " << out->GetATA() << " out->fyta " << out->GetYTA() << " out->fbta " << out->GetBTA() << " out->fdta " << out->GetDTA() << endl;
+Calibration.cc:563:    if(fabs(out->GetATA()) > 100)
+Calibration.cc:564:      out->SetATA(sqrt(-1.0));
+Calibration.cc:565:    if(fabs(out->GetYTA()) > 100)
+Calibration.cc:566:      out->SetYTA(sqrt(-1.0));
+Calibration.cc:567:    if(fabs(out->GetBTA()) > 200)
+Calibration.cc:568:      out->SetBTA(sqrt(-1.0));
+Calibration.cc:569:    if(fabs(out->GetDTA()) > 10)
+Calibration.cc:570:      out->SetDTA(sqrt(-1.0));
+Calibration.cc:572:    out->SetATA(out->GetATA()+fSett->AngleA());
+Calibration.cc:573:    out->SetBTA(out->GetBTA()+fSett->AngleB());
+Calibration.cc:574:    xsin = sin(out->GetATA()/1000);
+Calibration.cc:575:    ysin = sin(out->GetBTA()/1000);
+Calibration.cc:591:    out->SetPhi(s800_phi);//in rad
+Calibration.cc:596:    out->SetTheta(asin(sqrt(xsin*xsin + ysin*ysin)));//in rad
+Calibration.cc:598:    out->SetPtot(p0*(1.0 + out->GetDTA()/100*ratio));
+Calibration.cc:599:    out->SetPpar(out->GetPtot()*cos(out->GetTheta()));
+Calibration.cc:600:    out->SetPtra(out->GetPtot()*sin(out->GetTheta()));
+Calibration.cc:601:    out->SetEtot(e0*(1.0 + out->GetDTA()/100));
+Calibration.cc:630:  out->Clear();
+Calibration.cc:639:  out->SetAII(atan((x1 - x0)/gap) * 1000); // in mrad
+Calibration.cc:640:  out->SetXII(x0 + zii * tan(out->GetAII()/1000)); // in mm
+Calibration.cc:643:  out->SetBII(atan((y1 - y0) / gap) * 1000); // in mrad
+Calibration.cc:644:  out->SetYII(y0 + zii * tan(out->GetBII()/1000)); // in mm
+Calibration.cc:645:  xsin = sin(out->GetAII()/1000);
+Calibration.cc:646:  ysin = sin(out->GetBII()/1000);
+Calibration.cc:650:    out->SetPhi(atan(ysin/xsin));
+Calibration.cc:652:    out->SetPhi((pi - atan(ysin/fabs(xsin))));
+Calibration.cc:654:    out->SetPhi((pi + atan(fabs(ysin)/fabs(xsin))));
+Calibration.cc:656:    out->SetPhi((2*pi - atan(fabs(ysin)/xsin)));
+Calibration.cc:658:    out->SetPhi(0.0);
+Calibration.cc:661:  out->SetTheta(asin(sqrt(xsin*xsin + ysin*ysin)));
+Calibration.cc:1133:  out->Clear();
+Calibration.cc:1134:  out->SetCal(ICCal(in));
+Calibration.cc:1135:  double sum = ICSum(out->GetCal());
+Calibration.cc:1144:  out->SetSum(sum);
+Calibration.cc:1145:  out->SetDE(ICDE(sum,track));
+Calibration.cc:1154:  out->Clear();
+Calibration.cc:1155:  out->SetTime(in->GetTime());
+Calibration.cc:1159:  out->SetHitPattern(in->GetHitPattern(1)<<16|in->GetHitPattern(0));
+Calibration.cc:1176:    cout << "hodo calc hit pattern " << out->GetHitPattern() << " = ";
+Calibration.cc:1178:      if(out->GetHitPattern() & (1<<j))
+Calibration.cc:1199:      out->Set(cal,chv);
+Calibration.cc:1212:    out->AddFirstAB(en.back(),ch.back());
+Calibration.cc:1229:	out->AddAB(en[neigh],ch[neigh]);
+Calibration.cc:1309:  out->Clear();
+Calibration.cc:1310:  out->SetTime(TimeOffset(in->GetTime_up()),
+Calibration.cc:1312:  out->SetDE(in->GetDE_up(),
+Calibration.cc:1314:  if(out->GetDE()>fSett->GetScintThresh()){
+Calibration.cc:1350:  out->Clear();
+Calibration.cc:1364:  out->Set(TimeOffset(in->GetRF()), TimeOffset(in->GetOBJ())+obj_cor, TimeOffset(in->GetXFP())+xfp_cor);
+Calibration.cc:1365:  out->SetCorr(RFCorrection(track), OBJCorrection(track), XFPCorrection(track));
+Calibration.cc:1366:  out->SetTAC(in->GetTACOBJ()+objtac_cor, in->GetTACXFP()+xfptac_cor);
+Calibration.cc:1367:  out->SetTACCorr(TACOBJCorrection(track), TACXFPCorrection(track));
+Calibration.cc:1370:  out->Clear();
+Calibration.cc:1398:	out->Set(in->GetChannels()->at(i),*(in->GetTimes(i)));
+Calibration.cc:1404:	out->Set(in->GetChannels()->at(i),subtracted);
+Calibration.cc:1412:    out->SetMXFPV(in->GetXFP()->at(i));
+Calibration.cc:1413:    out->SetMXFPCorrV(in->GetXFP()->at(i),MXFPCorrection(track));
+Calibration.cc:1415:      out->SetMXFP(in->GetXFP()->at(i));
+Calibration.cc:1416:      out->SetMXFPCorr(in->GetXFP()->at(i),MXFPCorrection(track));
+Calibration.cc:1420:    out->SetMOBJV(in->GetOBJ()->at(i));
+Calibration.cc:1421:    out->SetMOBJCorrV(in->GetOBJ()->at(i),MOBJCorrection(track));
+Calibration.cc:1423:      out->SetMOBJ(in->GetOBJ()->at(i));
+Calibration.cc:1424:      out->SetMOBJCorr(in->GetOBJ()->at(i),MOBJCorrection(track));
+Calibration.cc:1479:  out->Clear();
+Calibration.cc:1523:    out->AddHit(new Mode3Detection(en, time, id));
+Calibration.cc:1597:  out->Clear();
+Calibration.cc:1605:    out->AddHit(new HitCalc(in->GetHit(i)));
+Calibration.cc~:420:  out->Clear();
+Calibration.cc~:428:  out->SetRegistr(in->GetTrigger()->GetRegistr());
+Calibration.cc~:429:  out->SetTimeS800(in->GetTrigger()->GetS800());
+Calibration.cc~:430:  out->SetTimeStamp(in->GetTS());
+Calibration.cc~:440:  if (out->GetRegistr()==2){
+Calibration.cc~:503:  out->SetPAD(pad[0],0);
+Calibration.cc~:504:  out->SetPAD(pad[1],1);
+Calibration.cc~:505:  out->SetPPAC(ppac[0],0);
+Calibration.cc~:506:  out->SetPPAC(ppac[1],1);
+Calibration.cc~:507:  out->SetIC(ich);
+Calibration.cc~:508:  out->SetTOF(tof);
+Calibration.cc~:509:  out->SetSCINT(scint[0],0);
+Calibration.cc~:510:  out->SetSCINT(scint[1],1);
+Calibration.cc~:511:  out->SetSCINT(scint[2],2);
+Calibration.cc~:512:  out->SetTRACK(track);
+Calibration.cc~:513:  out->SetMTDC(mtdc);
+Calibration.cc~:514:  out->SetIITRACK(iitrack);
+Calibration.cc~:515:  out->SetHODO(hodo);
+Calibration.cc~:520:  out->Clear();
+Calibration.cc~:540:  out->SetAFP(atan((x1 - x0)/gap) * 1000); // in mrad
+Calibration.cc~:541:  out->SetXFP(x0 + zfp * tan(out->GetAFP()/1000)); // in mm
+Calibration.cc~:542:  out->SetBFP(atan((y1 - y0) / gap) * 1000); // in mrad
+Calibration.cc~:543:  out->SetYFP(y0 + zfp * tan(out->GetBFP()/1000)); // in mm
+Calibration.cc~:545:  out->SetYFP(out->GetYFP()+fSett->ShiftY()); // in mm
+Calibration.cc~:548:  input[0] = -out->GetXFP()/1000;
+Calibration.cc~:549:  input[1] = -out->GetAFP()/1000;
+Calibration.cc~:550:  input[2] = out->GetYFP()/1000;
+Calibration.cc~:551:  input[3] = out->GetBFP()/1000;
+Calibration.cc~:554:    out->SetATA(MapCalc(order, 0, input) * 1000); // in mrad
+Calibration.cc~:555:    out->SetYTA(MapCalc(order, 1, input) * 1000); // in mm
+Calibration.cc~:556:    out->SetBTA(MapCalc(order, 2, input) * 1000); // in mrad
+Calibration.cc~:557:    out->SetDTA(MapCalc(order, 3, input) * 100); // in % dE/E
+Calibration.cc~:561:    cout << "AFP" << atan((x1 - x0)/gap) * 1000 <<  " XFP " << (x0 + zfp * tan(out->GetAFP()/1000)) << " YFP " << (y0 + zfp * tan(out->GetBFP()/1000)) <<  " BFP " << (atan((y1 - y0) / gap) * 1000) <<endl;
+Calibration.cc~:562:   // cout << "out->fata " << out->GetATA() << " out->fyta " << out->GetYTA() << " out->fbta " << out->GetBTA() << " out->fdta " << out->GetDTA() << endl;
+Calibration.cc~:563:    if(fabs(out->GetATA()) > 100)
+Calibration.cc~:564:      out->SetATA(sqrt(-1.0));
+Calibration.cc~:565:    if(fabs(out->GetYTA()) > 100)
+Calibration.cc~:566:      out->SetYTA(sqrt(-1.0));
+Calibration.cc~:567:    if(fabs(out->GetBTA()) > 200)
+Calibration.cc~:568:      out->SetBTA(sqrt(-1.0));
+Calibration.cc~:569:    if(fabs(out->GetDTA()) > 10)
+Calibration.cc~:570:      out->SetDTA(sqrt(-1.0));
+Calibration.cc~:572:    out->SetATA(out->GetATA()+fSett->AngleA());
+Calibration.cc~:573:    out->SetBTA(out->GetBTA()+fSett->AngleB());
+Calibration.cc~:574:    xsin = sin(out->GetATA()/1000);
+Calibration.cc~:575:    ysin = sin(out->GetBTA()/1000);
+Calibration.cc~:591:    out->SetPhi(s800_phi);//in rad
+Calibration.cc~:596:    out->SetTheta(asin(sqrt(xsin*xsin + ysin*ysin)));//in rad
+Calibration.cc~:598:    out->SetPtot(p0*(1.0 + out->GetDTA()/100*ratio));
+Calibration.cc~:599:    out->SetPpar(out->GetPtot()*cos(out->GetTheta()));
+Calibration.cc~:600:    out->SetPtra(out->GetPtot()*sin(out->GetTheta()));
+Calibration.cc~:601:    out->SetEtot(e0*(1.0 + out->GetDTA()/100));
+Calibration.cc~:630:  out->Clear();
+Calibration.cc~:639:  out->SetAII(atan((x1 - x0)/gap) * 1000); // in mrad
+Calibration.cc~:640:  out->SetXII(x0 + zii * tan(out->GetAII()/1000)); // in mm
+Calibration.cc~:643:  out->SetBII(atan((y1 - y0) / gap) * 1000); // in mrad
+Calibration.cc~:644:  out->SetYII(y0 + zii * tan(out->GetBII()/1000)); // in mm
+Calibration.cc~:645:  xsin = sin(out->GetAII()/1000);
+Calibration.cc~:646:  ysin = sin(out->GetBII()/1000);
+Calibration.cc~:650:    out->SetPhi(atan(ysin/xsin));
+Calibration.cc~:652:    out->SetPhi((pi - atan(ysin/fabs(xsin))));
+Calibration.cc~:654:    out->SetPhi((pi + atan(fabs(ysin)/fabs(xsin))));
+Calibration.cc~:656:    out->SetPhi((2*pi - atan(fabs(ysin)/xsin)));
+Calibration.cc~:658:    out->SetPhi(0.0);
+Calibration.cc~:661:  out->SetTheta(asin(sqrt(xsin*xsin + ysin*ysin)));
+Calibration.cc~:1133:  out->Clear();
+Calibration.cc~:1134:  out->SetCal(ICCal(in));
+Calibration.cc~:1135:  double sum = ICSum(out->GetCal());
+Calibration.cc~:1144:  out->SetSum(sum);
+Calibration.cc~:1145:  out->SetDE(ICDE(sum,track));
+Calibration.cc~:1154:  out->Clear();
+Calibration.cc~:1155:  out->SetTime(in->GetTime());
+Calibration.cc~:1159:  out->SetHitPattern(in->GetHitPattern(1)<<16|in->GetHitPattern(0));
+Calibration.cc~:1176:    cout << "hodo calc hit pattern " << out->GetHitPattern() << " = ";
+Calibration.cc~:1178:      if(out->GetHitPattern() & (1<<j))
+Calibration.cc~:1199:      out->Set(cal,chv);
+Calibration.cc~:1212:    out->AddFirstAB(en.back(),ch.back());
+Calibration.cc~:1229:	out->AddAB(en[neigh],ch[neigh]);
+Calibration.cc~:1309:  out->Clear();
+Calibration.cc~:1310:  out->SetTime(TimeOffset(in->GetTime_up()),
+Calibration.cc~:1312:  out->SetDE(in->GetDE_up(),
+Calibration.cc~:1314:  if(out->GetDE()>fSett->GetScintThresh()){
+Calibration.cc~:1350:  out->Clear();
+Calibration.cc~:1364:  out->Set(TimeOffset(in->GetRF()), TimeOffset(in->GetOBJ())+obj_cor, TimeOffset(in->GetXFP())+xfp_cor);
+Calibration.cc~:1365:  out->SetCorr(RFCorrection(track), OBJCorrection(track), XFPCorrection(track));
+Calibration.cc~:1366:  out->SetTAC(in->GetTACOBJ()+objtac_cor, in->GetTACXFP()+xfptac_cor);
+Calibration.cc~:1367:  out->SetTACCorr(TACOBJCorrection(track), TACXFPCorrection(track));
+Calibration.cc~:1370:  out->Clear();
+Calibration.cc~:1398:	out->Set(in->GetChannels()->at(i),*(in->GetTimes(i)));
+Calibration.cc~:1404:	out->Set(in->GetChannels()->at(i),subtracted);
+Calibration.cc~:1412:    out->SetMXFPV(in->GetXFP()->at(i));
+Calibration.cc~:1413:    out->SetMXFPCorrV(in->GetXFP()->at(i),MXFPCorrection(track));
+Calibration.cc~:1415:      out->SetMXFP(in->GetXFP()->at(i));
+Calibration.cc~:1416:      out->SetMXFPCorr(in->GetXFP()->at(i),MXFPCorrection(track));
+Calibration.cc~:1420:    out->SetMOBJV(in->GetOBJ()->at(i));
+Calibration.cc~:1421:    out->SetMOBJCorrV(in->GetOBJ()->at(i),MOBJCorrection(track));
+Calibration.cc~:1423:      out->SetMOBJ(in->GetOBJ()->at(i));
+Calibration.cc~:1424:      out->SetMOBJCorr(in->GetOBJ()->at(i),MOBJCorrection(track));
+Calibration.cc~:1479:  out->Clear();
+Calibration.cc~:1523:    out->AddHit(new Mode3Detection(en, time, id));
+Calibration.cc~:1597:  out->Clear();
+Calibration.cc~:1605:    out->AddHit(new HitCalc(in->GetHit(i)));
+Binary file Calibration.o matches
+ICCal.cc:175:	  fout->cd();
+ICCal.cc:226:  fout->Close();

@@ -1,0 +1,17 @@
+1. Copy all Sivi's original files into a folder called GrROOT_Files in home directory
+
+2. Move the GrROOT subdirectory of this into the top level (now you have GrROOT_Files and GrROOT
+
+3. edit env.sh in GrROOT to have /shared/storage/physnp/mab503/GrROOT
+
+4. edit .bashrc to have /shared/storage/physnp/mab503/GrROOT/env.sh
+
+DO THE REST ON RESEARCH0 or 2
+
+5. type source ~/.bashrc to run the bashrc file 
+
+6.  go to /src in GrROOT and type make -j99 to compile everything 
+
+7. In parallel codes / Calfiles edit Calfiles.sh and Calfiles2.sh to have the right paths for the data.
+
+8. In MakeSettings.cpp update all the paths....
