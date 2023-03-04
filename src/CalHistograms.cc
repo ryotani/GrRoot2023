@@ -198,31 +198,31 @@ void CalHistograms::FillHistograms(GretinaCalc* gr, S800Calc* s800, Mode3Calc* m
   FillHistogramsGateOut(gr,s800,m3c,"all");
   for(UShort_t in=0;in<InPartCut.size();in++){ // loop over incoming cuts
   
-/*
-//added by paul and thoryn 13/05/16 !!!!! 
+    /*
+    //added by paul and thoryn 13/05/16 !!!!! 
   
-	//int hitcounter = 0;
+    //int hitcounter = 0;
 
-  for(UShort_t i=0;i<tof->GetMOBJV()->size();i++){
+    for(UShort_t i=0;i<tof->GetMOBJV()->size();i++){
     for(UShort_t j=0;j<tof->GetMXFPV()->size();j++){
-      if(InPartCut[in]->IsInside(tof->GetMOBJCV()->at(i),tof->GetMXFPV()->at(j))){
-      	boolMesyPass = true;
-	//hitcounter ++;
+    if(InPartCut[in]->IsInside(tof->GetMOBJCV()->at(i),tof->GetMXFPV()->at(j))){
+    boolMesyPass = true;
+    //hitcounter ++;
 
-	tof->SetMOBJ(tof->GetMOBJV()->at(i));
+    tof->SetMOBJ(tof->GetMOBJV()->at(i));
 
-	tof->SetMOBJCorr(tof->GetMOBJCV()->at(i),0.);	//by thoryn
+    tof->SetMOBJCorr(tof->GetMOBJCV()->at(i),0.);	//by thoryn
 
-	tof->SetMXFP(tof->GetMXFPV()->at(j));
+    tof->SetMXFP(tof->GetMXFPV()->at(j));
 
-	tof->SetMXFPCorr(tof->GetMXFPCV()->at(j),0.);
-	}
+    tof->SetMXFPCorr(tof->GetMXFPCV()->at(j),0.);
     }
-  }
+    }
+    }
   
-//if (hitcounter > 1)
-	//cout << "passed hits" << hitcounter << endl;
-*/
+    //if (hitcounter > 1)
+    //cout << "passed hits" << hitcounter << endl;
+    */
     if( (ftac==1 && InPartCut[in]->IsInside(tof->GetOBJ(),tof->GetXFP()))
 	|| (ftac==0 && InPartCut[in]->IsInside(tof->GetOBJ(),tof->GetXFP())) 
 	|| (ftac==3 && InPartCut[in]->IsInside(tof->GetTACOBJ(),tof->GetTACXFP())) 
@@ -249,9 +249,9 @@ void CalHistograms::FillHistograms(GretinaCalc* gr, S800Calc* s800, Mode3Calc* m
 
 	  FillHistogramsGateOut(gr,s800,m3c,outname);
 	  Fill(Form("txfp_%s",outname), 600,-300,300,track->GetXFP());
-//	  if (hasgret){
-//	    FillHistogramsGateOut(gr,s800,m3c,Form("%s_coinc",outname));
-//	  }
+	  //	  if (hasgret){
+	  //	    FillHistogramsGateOut(gr,s800,m3c,Form("%s_coinc",outname));
+	  //	  }
 
 	}
 
@@ -299,14 +299,14 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
 	Fill(Form("ppac_%d_X",p),64,0,64,i,1000,0,100000,ppac[p]->GetXStrips()[i]);
     }
     for(UShort_t i=0; i<ppac[p]->GetYStrips().size();i++){
-       if(ppac[p]->GetYStrips()[i]>0)
-	 Fill(Form("ppac_%d_Y",p),64,0,64,i,1000,0,100000,ppac[p]->GetYStrips()[i]);
+      if(ppac[p]->GetYStrips()[i]>0)
+	Fill(Form("ppac_%d_Y",p),64,0,64,i,1000,0,100000,ppac[p]->GetYStrips()[i]);
     } 
   }
 
-/*Removing Hodo! Thoryn 26/09/16
-  Double_t sum =0;
-  for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
+  /*Removing Hodo! Thoryn 26/09/16
+    Double_t sum =0;
+    for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
     Short_t ch = hodo->GetChannel()->at(c);
     Fill(Form("hodo_%d",ch),1000,0,4000,hodo->GetEnergy()->at(c));
     Fill("hodo_vs_ch",32,0,32,ch,400,0,4000,hodo->GetEnergy()->at(c));
@@ -315,26 +315,26 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
     Fill("hodotime_vs_ch",32,0,32,ch,1000,0,4000,hodo->GetTime());
     Fill("hodotime_all",4000,0,4000,hodo->GetTime());
     if(hodo->GetEnergy()->at(c)>50)
-      sum+=hodo->GetEnergy()->at(c);
-  }// hodo energy
-  Fill("hodo_sum",1000,0,4000,sum);
-*/
+    sum+=hodo->GetEnergy()->at(c);
+    }// hodo energy
+    Fill("hodo_sum",1000,0,4000,sum);
+  */
 
 
   if(fCal==0){
-/*
-    Fill("obj_vs_time",
-	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-	 fobj_range[0]/2,fobj_range[1],fobj_range[2],tof->GetOBJ());
-    Fill("xfp_vs_time",
-	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-	 fxfp_range[0]/2,fxfp_range[1],fxfp_range[2],tof->GetXFP());
-    Fill("objtac_vs_time",
-	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-	 ftacobj_range[0]/2,ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ());
-    Fill("xfptac_vs_time",
-	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-	 ftacxfp_range[0]/2,ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP()); */
+    /*
+      Fill("obj_vs_time",
+      fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+      fobj_range[0]/2,fobj_range[1],fobj_range[2],tof->GetOBJ());
+      Fill("xfp_vs_time",
+      fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+      fxfp_range[0]/2,fxfp_range[1],fxfp_range[2],tof->GetXFP());
+      Fill("objtac_vs_time",
+      fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+      ftacobj_range[0]/2,ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ());
+      Fill("xfptac_vs_time",
+      fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+      ftacxfp_range[0]/2,ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP()); */
     Fill("objm_vs_time",
 	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
 	 fmobj_range[0]/2,fmobj_range[1],fmobj_range[2],tof->GetMOBJ());
@@ -364,11 +364,11 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
   }
 
   if(hasgret){
-  	Fill("xfp_vs_objm_coinc",
+    Fill("xfp_vs_objm_coinc",
 	 fobj_range[0],fobj_range[1],fobj_range[2],tof->GetMOBJ(),
 	 fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetMXFP());
 
-	Fill("xfp_vs_objm_coincS",
+    Fill("xfp_vs_objm_coincS",
 	 fobj_range[0],fobj_range[1],fobj_range[2],tof->GetMOBJ()-360,
 	 fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetMXFP()-360);
 
@@ -376,66 +376,66 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
   }
 
 
-   Fill("xfp_vs_obj",
+  Fill("xfp_vs_obj",
        fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
        fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP());
 
-/*
-  Fill("x_vs_obj",
-       fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_obj",
-       fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
-       100,-100,100,track->GetAFP());
-  Fill("x_vs_objC",
-       fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_objC",
-       fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-       100,-50,50,track->GetAFP());
+  /*
+    Fill("x_vs_obj",
+    fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_obj",
+    fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
+    100,-100,100,track->GetAFP());
+    Fill("x_vs_objC",
+    fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_objC",
+    fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+    100,-50,50,track->GetAFP());
 
-  Fill("x_vs_xfp",
-       fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_xfp",
-       fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
-       100,-50,50,track->GetAFP());
-  Fill("x_vs_xfpC",
-       fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_xfpC",
-       fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-       100,-50,50,track->GetAFP());
+    Fill("x_vs_xfp",
+    fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_xfp",
+    fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
+    100,-50,50,track->GetAFP());
+    Fill("x_vs_xfpC",
+    fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_xfpC",
+    fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+    100,-50,50,track->GetAFP());
 
 
-   Fill("xfp_vs_objtac",
-       ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
-       ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP());
-  Fill("x_vs_objtac",
-       ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_objtac",
-       ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
-       100,-50,50,track->GetAFP());
-  Fill("x_vs_objtacC",
-       ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_objtacC",
-       ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-       100,-50,50,track->GetAFP()); 
+    Fill("xfp_vs_objtac",
+    ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
+    ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP());
+    Fill("x_vs_objtac",
+    ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_objtac",
+    ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
+    100,-50,50,track->GetAFP());
+    Fill("x_vs_objtacC",
+    ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_objtacC",
+    ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+    100,-50,50,track->GetAFP()); 
 
-  Fill("x_vs_xfptac",
-       ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_xfptac",
-       ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
-       100,-50,50,track->GetAFP());
-  Fill("x_vs_xfptacC",
-       ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-       600,-300,300,pad[0]->GetX());
-  Fill("afp_vs_xfptacC",
-       ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-       100,-50,50,track->GetAFP());  */
+    Fill("x_vs_xfptac",
+    ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_xfptac",
+    ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
+    100,-50,50,track->GetAFP());
+    Fill("x_vs_xfptacC",
+    ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+    600,-300,300,pad[0]->GetX());
+    Fill("afp_vs_xfptacC",
+    ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+    100,-50,50,track->GetAFP());  */
 
   for(UShort_t i=0;i<tof->GetMOBJV()->size();i++){
     for(UShort_t j=0;j<tof->GetMXFPV()->size();j++){
@@ -443,7 +443,7 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
 	   fmobj_range[0],fmobj_range[1],fmobj_range[2],tof->GetMOBJV()->at(i),
 	   fmxfp_range[0],fmxfp_range[1],fmxfp_range[2],tof->GetMXFPV()->at(j));
 
-	}
+    }
   }
   for(UShort_t i=0;i<tof->GetMOBJV()->size();i++){
     Fill("x_vs_objm",
@@ -479,7 +479,7 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
     HitCalc* hit = gr->GetHit(g);
     float energy = hit->GetEnergy();
     float energy_dc = hit->GetDCEnergy();
-   Fill("egam",
+    Fill("egam",
 	 8000,0,8000,energy);
     Fill("egam_tgam",
 	 2000,0,4000,energy,
@@ -492,7 +492,7 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
     Fill("egam_summary",
 	 44,-0.5,43.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(), //ranges changed for 10 modules
 	 2000,0,2000,energy);
-   }
+  }
   for(UShort_t g=0;g<gr->GetMultAB();g++){
     HitCalc* hit = gr->GetHitAB(g);
     float energy = hit->GetEnergy();
@@ -510,7 +510,7 @@ void CalHistograms::FillHistogramsNoGate(GretinaCalc* gr, S800Calc* s800, Mode3C
     Fill("egamAB_summary", //ranges changed for 10 modules
 	 44,-0.5,43.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(),
 	 2000,0,2000,energy);
-   }
+  }
 
 }
 
@@ -547,11 +547,11 @@ void CalHistograms::FillHistogramsGateIn(GretinaCalc* gr, S800Calc* s800, Mode3C
 
 
   /* Fill(Form("ICde_vs_obj_%s",inname),
-       fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
-  Fill(Form("ICde_vs_objc_%s",inname),
-       fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE()); */
+     fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
+     fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+     Fill(Form("ICde_vs_objc_%s",inname),
+     fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+     fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE()); */
   if (hasgret){
     Fill(Form("ICde_vs_objc_coinc_%s",inname),
 	 fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
@@ -560,37 +560,37 @@ void CalHistograms::FillHistogramsGateIn(GretinaCalc* gr, S800Calc* s800, Mode3C
 
 
  
-/*Hodo! Thoryn 26/09/16
-  Double_t sum =0;
-  for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
+  /*Hodo! Thoryn 26/09/16
+    Double_t sum =0;
+    for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
     if(hodo->GetEnergy()->at(c)>50)
-      sum+=hodo->GetEnergy()->at(c);
-  }// hodo energy
-  Fill(Form("hodo_sum_%s",inname),1000,0,4000,sum);
-  if(sum>100){
+    sum+=hodo->GetEnergy()->at(c);
+    }// hodo energy
+    Fill(Form("hodo_sum_%s",inname),1000,0,4000,sum);
+    if(sum>100){
     Fill(Form("ICde_vs_objtacc_hodo_%s",inname),
-	 ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-	 fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+    ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
     Fill(Form("ICde_vs_objc_hodo_%s",inname),
-	 fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-	 fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+    fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
     Fill(Form("ICde_vs_objmc_hodo_%s",inname),
-       fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
-  }
-*/
+    fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+    }
+  */
   //Fill(Form("ICde_vs_objtacc_%s",inname),
-       //ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-       //fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+  //ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+  //fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
   Fill(Form("ICde_vs_objmc_coinc_%s",inname),
 
-//commented out by thoryn
+       //commented out by thoryn
        fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
-//commented out by thoryn
+       //commented out by thoryn
 
-//added by thoryn
+       //added by thoryn
        //fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJ(),
-//addedby thoryn
+       //addedby thoryn
 
        fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
 
@@ -599,31 +599,31 @@ void CalHistograms::FillHistogramsGateIn(GretinaCalc* gr, S800Calc* s800, Mode3C
 
 
 
- /* Fill(Form("ICde_vs_xfpc_%s",inname),
-       fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
-  Fill(Form("ICde_vs_xfptacc_%s",inname),
-       ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE()); */
+  /* Fill(Form("ICde_vs_xfpc_%s",inname),
+     fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+     fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+     Fill(Form("ICde_vs_xfptacc_%s",inname),
+     ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+     fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE()); */
   Fill(Form("ICde_vs_xfpmc_%s",inname),
        fmxfpC_range[0],fmxfpC_range[1],fmxfpC_range[2],tof->GetMXFPC(),
        fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE()); 
 
   /*Fill(Form("ICsum_vs_objc_%s",inname),
-       fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
-  Fill(Form("ICsum_vs_objtacc_%s",inname),
-       ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum()); */
+    fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
+    Fill(Form("ICsum_vs_objtacc_%s",inname),
+    ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum()); */
   Fill(Form("ICsum_vs_objmc_%s",inname),
        fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
        fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
   /*Fill(Form("ICsum_vs_xfpc_%s",inname),
-       fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
-  Fill(Form("ICsum_vs_xfptacc_%s",inname),
-       ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-       fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum()); */
+    fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
+    Fill(Form("ICsum_vs_xfptacc_%s",inname),
+    ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+    fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum()); */
   Fill(Form("ICsum_vs_xfpmc_%s",inname),
        fmxfpC_range[0],fmxfpC_range[1],fmxfpC_range[2],tof->GetMXFPC(),
        fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
@@ -661,40 +661,40 @@ void CalHistograms::FillHistogramsGateOut(GretinaCalc* gr, S800Calc* s800, Mode3
   //HODO* hodo = s800->GetHODO();
   bool hasgret = gr->GetMultAB()>0;
 
-/* Hodo! Thoryn 26/09/16
+  /* Hodo! Thoryn 26/09/16
 
-  for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
-    Short_t ch = hodo->GetChannel()->at(c);
-    //Fill(Form("hodo_%d_%s",ch,oname.Data()),1000,0,4000,hodo->GetEnergy()->at(c));
-    Fill(Form("hodo_vs_ch_%s",oname.Data()),32,0,32,ch,400,0,4000,hodo->GetEnergy()->at(c));
-    Fill(Form("hodo_all_%s",oname.Data()),1000,0,4000,hodo->GetEnergy()->at(c));
-    //Fill(Form("hodotime_%d_%s",ch,oname.Data()),4000,0,4000,hodo->GetTime());
-    if(hodo->GetEnergy()->at(c)>100){
-      Fill(Form("hodotime_vs_ch_%s",oname.Data()),32,0,32,ch,1000,0,4000,hodo->GetTime());
-      Fill(Form("hodotime_vs_en_%s",oname.Data()),400,0,4000,hodo->GetEnergy()->at(c),1000,0,4000,hodo->GetTime());
-      Fill(Form("hodotime_all_%s",oname.Data()),4000,0,4000,hodo->GetTime());
-      for (UShort_t g=0; g<gr->GetMult(); g++){
-	HitCalc* hit = gr->GetHit(g);
-	float energy_dc = hit->GetDCEnergy();
-	Fill(Form("egamdc_hodo_%s",oname.Data()),
-	     1000,0,4000,energy_dc,1000,0,4000,hodo->GetEnergy()->at(c));
-      }
-      for(UShort_t g=0;g<gr->GetMultAB();g++){
-	HitCalc* hit = gr->GetHitAB(g);
-	float energy_dc = hit->GetDCEnergy();
-	Fill(Form("egamABdc_hodo_%s",oname.Data()),
-	     1000,0,4000,energy_dc,1000,0,4000,hodo->GetEnergy()->at(c));
-      }
-      Fill(Form("hodo_ppar_%s",oname.Data()),
-	   1000,0,4000,hodo->GetEnergy()->at(c),
-	   fPP_range[0],fPP_range[1],fPP_range[2],track->GetPpar());
-      Fill(Form("hodo_pparc_%s",oname.Data()),
-	   1000,0,4000,hodo->GetEnergy()->at(c),
-	   fPP_range[0],fPP_range[1],fPP_range[2],track->GetPparC());
-    }//good hodo energy
-  }// hodo energy
+     for(UShort_t c=0; c<hodo->GetEnergy()->size();c++){
+     Short_t ch = hodo->GetChannel()->at(c);
+     //Fill(Form("hodo_%d_%s",ch,oname.Data()),1000,0,4000,hodo->GetEnergy()->at(c));
+     Fill(Form("hodo_vs_ch_%s",oname.Data()),32,0,32,ch,400,0,4000,hodo->GetEnergy()->at(c));
+     Fill(Form("hodo_all_%s",oname.Data()),1000,0,4000,hodo->GetEnergy()->at(c));
+     //Fill(Form("hodotime_%d_%s",ch,oname.Data()),4000,0,4000,hodo->GetTime());
+     if(hodo->GetEnergy()->at(c)>100){
+     Fill(Form("hodotime_vs_ch_%s",oname.Data()),32,0,32,ch,1000,0,4000,hodo->GetTime());
+     Fill(Form("hodotime_vs_en_%s",oname.Data()),400,0,4000,hodo->GetEnergy()->at(c),1000,0,4000,hodo->GetTime());
+     Fill(Form("hodotime_all_%s",oname.Data()),4000,0,4000,hodo->GetTime());
+     for (UShort_t g=0; g<gr->GetMult(); g++){
+     HitCalc* hit = gr->GetHit(g);
+     float energy_dc = hit->GetDCEnergy();
+     Fill(Form("egamdc_hodo_%s",oname.Data()),
+     1000,0,4000,energy_dc,1000,0,4000,hodo->GetEnergy()->at(c));
+     }
+     for(UShort_t g=0;g<gr->GetMultAB();g++){
+     HitCalc* hit = gr->GetHitAB(g);
+     float energy_dc = hit->GetDCEnergy();
+     Fill(Form("egamABdc_hodo_%s",oname.Data()),
+     1000,0,4000,energy_dc,1000,0,4000,hodo->GetEnergy()->at(c));
+     }
+     Fill(Form("hodo_ppar_%s",oname.Data()),
+     1000,0,4000,hodo->GetEnergy()->at(c),
+     fPP_range[0],fPP_range[1],fPP_range[2],track->GetPpar());
+     Fill(Form("hodo_pparc_%s",oname.Data()),
+     1000,0,4000,hodo->GetEnergy()->at(c),
+     fPP_range[0],fPP_range[1],fPP_range[2],track->GetPparC());
+     }//good hodo energy
+     }// hodo energy
 
-*/
+  */
 
   for (UShort_t g=0; g<gr->GetMultAB(); g++){
     HitCalc* hit = gr->GetHitAB(g);
@@ -704,53 +704,53 @@ void CalHistograms::FillHistogramsGateOut(GretinaCalc* gr, S800Calc* s800, Mode3
     //TRACK* track = s800->GetTRACK();
 
 
-//added by ryan (no contaminants hists)
-  if (hasgret && energy_dc>150){
-  Fill(Form("ICde_vs_objc_coinc_NC_%s",oname.Data()),
-  fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
-  fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
+    //added by ryan (no contaminants hists)
+    if (hasgret && energy_dc>150){
+      Fill(Form("ICde_vs_objc_coinc_NC_%s",oname.Data()),
+	   fmobjC_range[0],fmobjC_range[1],fmobjC_range[2],tof->GetMOBJC(),
+	   fIC_range[0],fIC_range[1],fIC_range[2],ich->GetDE());
 
 
-    Fill(Form("hcrdc0xyeventNC_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(0)->GetY());
+      Fill(Form("hcrdc0xyeventNC_%s",oname.Data()),
+	   fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	   600,-300,300,s800->GetPAD(0)->GetY());
 
-  Fill(Form("hcrdc1xyeventNC_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(1)->GetY());
+      Fill(Form("hcrdc1xyeventNC_%s",oname.Data()),
+	   fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	   600,-300,300,s800->GetPAD(1)->GetY());
 
- Fill(Form("ataNC_%s",oname.Data()),
-       400,-200,200,track->GetATA());
-  Fill(Form("btaNC_%s",oname.Data()),
-       400,-200,200,track->GetBTA());
-  Fill(Form("ata_btaNC_%s",oname.Data()),
-       400,-200,200,track->GetATA(),
-       400,-200,200,track->GetBTA());
-  Fill(Form("scatterNC_%s",oname.Data()),
-       500,0,0.5,track->GetTheta());
+      Fill(Form("ataNC_%s",oname.Data()),
+	   400,-200,200,track->GetATA());
+      Fill(Form("btaNC_%s",oname.Data()),
+	   400,-200,200,track->GetBTA());
+      Fill(Form("ata_btaNC_%s",oname.Data()),
+	   400,-200,200,track->GetATA(),
+	   400,-200,200,track->GetBTA());
+      Fill(Form("scatterNC_%s",oname.Data()),
+	   500,0,0.5,track->GetTheta());
 
-  Fill(Form("egamABdcNC_%s",oname.Data()),
-	 4000,0,4000,energy_dc);
+      Fill(Form("egamABdcNC_%s",oname.Data()),
+	   4000,0,4000,energy_dc);
 
-//added time gated gamma addback spectrum
+      //added time gated gamma addback spectrum
 
-if (hit->GetTime()>=-70 && hit->GetTime()<=-55){
-Fill(Form("egamABdcNCtime_%s",oname.Data()),
-	 4000,0,4000,energy_dc);
-}
+      if (hit->GetTime()>=-70 && hit->GetTime()<=-55){
+	Fill(Form("egamABdcNCtime_%s",oname.Data()),
+	     4000,0,4000,energy_dc);
+      }
 
 
-// ata/bta/yta vs event added by ryan
+      // ata/bta/yta vs event added by ryan
 
-Fill(Form("ataeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetATA());
+      Fill(Form("ataeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetATA());
 
-Fill(Form("btaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetBTA());
+      Fill(Form("btaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetBTA());
 
-Fill(Form("ytaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetYTA());
+      Fill(Form("ytaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetYTA());
 
-//dphi and dtheta added by ryan
-    float dphi = hit->GetPosition().Phi() - track->GetPhi();
-	while(dphi<0)
+      //dphi and dtheta added by ryan
+      float dphi = hit->GetPosition().Phi() - track->GetPhi();
+      while(dphi<0)
 	dphi+=2*TMath::Pi();
       while(dphi>2*TMath::Pi())
 	dphi-=2*TMath::Pi();
@@ -758,40 +758,40 @@ Fill(Form("ytaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*
 
 
 
-   float dtheta = hit->GetPosition().Theta() - track->GetTheta();
-	while(dtheta<0)
+      float dtheta = hit->GetPosition().Theta() - track->GetTheta();
+      while(dtheta<0)
 	dtheta+=2*TMath::Pi();
       while(dtheta>2*TMath::Pi())
 	dtheta-=2*TMath::Pi();
 
-	Fill(Form("egamdc_dphiNC_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); 
-	Fill(Form("egamdc_dthetaNC_%s_tcut",oname.Data()), 140,0.6,2,dtheta, 2000,0,2000,energy_dc);
+      Fill(Form("egamdc_dphiNC_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); 
+      Fill(Form("egamdc_dthetaNC_%s_tcut",oname.Data()), 140,0.6,2,dtheta, 2000,0,2000,energy_dc);
 	
 
-  }
+    }
 
-//dphi and dtheta added by ryan
+    //dphi and dtheta added by ryan
     float dphi = hit->GetPosition().Phi() - track->GetPhi();
-	while(dphi<0)
-	dphi+=2*TMath::Pi();
-      while(dphi>2*TMath::Pi())
-	dphi-=2*TMath::Pi();
+    while(dphi<0)
+      dphi+=2*TMath::Pi();
+    while(dphi>2*TMath::Pi())
+      dphi-=2*TMath::Pi();
 
 
-   float dtheta = hit->GetPosition().Theta() - track->GetTheta();
-	while(dtheta<0)
-	dtheta+=2*TMath::Pi();
-      while(dtheta>2*TMath::Pi())
-	dtheta-=2*TMath::Pi();
-//crdc event by event added by ryan
+    float dtheta = hit->GetPosition().Theta() - track->GetTheta();
+    while(dtheta<0)
+      dtheta+=2*TMath::Pi();
+    while(dtheta>2*TMath::Pi())
+      dtheta-=2*TMath::Pi();
+    //crdc event by event added by ryan
 
-  Fill(Form("hcrdc0xyevent_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(0)->GetY());
+    Fill(Form("hcrdc0xyevent_%s",oname.Data()),
+	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	 600,-300,300,s800->GetPAD(0)->GetY());
 
-  Fill(Form("hcrdc1xyevent_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(1)->GetY());
+    Fill(Form("hcrdc1xyevent_%s",oname.Data()),
+	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	 600,-300,300,s800->GetPAD(1)->GetY());
 
 
     Fill(Form("egam_%s",oname.Data()),
@@ -808,7 +808,7 @@ Fill(Form("ytaeventNC_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*
     Fill(Form("egam_summary_%s",oname.Data()),
 	 40,-0.5,39.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(),
 	 2000,0,2000,energy);
-Fill(Form("egamdc_summary_%s",oname.Data()),
+    Fill(Form("egamdc_summary_%s",oname.Data()),
 	 40,-0.5,39.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(),
 	 2000,0,2000,energy_dc);
     Fill(Form("egamdc_%s",oname.Data()),
@@ -838,7 +838,7 @@ Fill(Form("egamdc_summary_%s",oname.Data()),
       Fill(Form("egam_summary_%s_tcut",oname.Data()),
 	   40,-0.5,39.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(),
 	   2000,0,2000,energy);
-Fill(Form("egamdc_summary_%s_tcut",oname.Data()), //added dc energy plot
+      Fill(Form("egamdc_summary_%s_tcut",oname.Data()), //added dc energy plot
 	   40,-0.5,39.5,4*fSett->Hole2Det(hit->GetHole())+hit->GetCrystal(),
 	   2000,0,2000,energy_dc);
       Fill(Form("egamdc_%s_tcut",oname.Data()),
@@ -852,15 +852,15 @@ Fill(Form("egamdc_summary_%s_tcut",oname.Data()), //added dc energy plot
       Fill(Form("egamdc_ppar_%s_tcut",oname.Data()),
 	   4000,0,4000,energy_dc,
 	   fPP_range[0],fPP_range[1],fPP_range[2],track->GetPpar());
-   //added by ryan
+      //added by ryan
       Fill(Form("egamdc_dphi_%s_tcut",oname.Data()), 630,0,6.3,dphi, 2000,0,2000,energy_dc); //added
-	Fill(Form("egamdc_dtheta_%s_tcut",oname.Data()), 630,0,6.3,dtheta, 2000,0,2000,energy_dc); //added
-Fill(Form("egam_dphi_%s_tcut",oname.Data()), 630,0,6.3,dphi, 2000,0,2000,energy); //added
-	Fill(Form("egam_dtheta_%s_tcut",oname.Data()), 630,0,6.3,dtheta, 2000,0,2000,energy); //added
+      Fill(Form("egamdc_dtheta_%s_tcut",oname.Data()), 630,0,6.3,dtheta, 2000,0,2000,energy_dc); //added
+      Fill(Form("egam_dphi_%s_tcut",oname.Data()), 630,0,6.3,dphi, 2000,0,2000,energy); //added
+      Fill(Form("egam_dtheta_%s_tcut",oname.Data()), 630,0,6.3,dtheta, 2000,0,2000,energy); //added
     }
 
-//holes changed to correspond to detector holes in e16016 with 10 modules. q9 and q8 electronics are wrong way around
-   int q = fSett->Hole2Det(hit->GetHole());
+    //holes changed to correspond to detector holes in e16016 with 10 modules. q9 and q8 electronics are wrong way around
+    int q = fSett->Hole2Det(hit->GetHole());
     if(q==3 || q==7 || q==6 || q==1 || q==4 || q==9) {
       Fill(Form("egamdc_ABW_%s",oname.Data()),
 	   4000,0,4000,energy_dc);
@@ -869,11 +869,11 @@ Fill(Form("egam_dphi_%s_tcut",oname.Data()), 630,0,6.3,dphi, 2000,0,2000,energy)
       Fill(Form("egamdc_AFW_%s",oname.Data()),
 	   4000,0,4000,energy_dc); } //changed to energy_dc from hit->GetDCEnergy(0.3)  (will now use beta from settings file rather than 0.3) by ryan */
 
-if(hit->GetPosition().Theta()>1.6 && hasgret){
+    if(hit->GetPosition().Theta()>1.6 && hasgret){
       Fill(Form("egamdc_BW_coinc_%s",oname.Data()),
 	   4000,0,4000,energy_dc);
 
-	Fill(Form("egamdc_BW_coincNT_%s",oname.Data()),
+      Fill(Form("egamdc_BW_coincNT_%s",oname.Data()),
 	   4000,0,4000,hit->GetDCEnergy(0.28));
 
 	
@@ -881,19 +881,19 @@ if(hit->GetPosition().Theta()>1.6 && hasgret){
     else if(hit->GetPosition().Theta()<1 && hasgret){
       Fill(Form("egamdc_FW_coinc_%s",oname.Data()),
 	   4000,0,4000,energy_dc);  //changed to energy_dc from hit->GetDCEnergy(0.3)  (will now use beta from settings file rather than 0.3) by ryan
-//changed from certain crystals to above/below a certain theta values since crystals with the same number are at different angles for different modules
+      //changed from certain crystals to above/below a certain theta values since crystals with the same number are at different angles for different modules
 
-	Fill(Form("egamdc_FW_coincNT_%s",oname.Data()), //added gamma spectrum with no s800 data. Spectrum assumes beam is perfectly straight at (0,0) on target with specified beta value 
+      Fill(Form("egamdc_FW_coincNT_%s",oname.Data()), //added gamma spectrum with no s800 data. Spectrum assumes beam is perfectly straight at (0,0) on target with specified beta value 
 	   4000,0,4000,hit->GetDCEnergy(0.28));
 
 
     }
 
-double corrphi = hit->GetPosition().Phi();
-      while(corrphi<0)
-	corrphi+=2*TMath::Pi();
-      while(corrphi>2*TMath::Pi())
-	corrphi-=2*TMath::Pi();
+    double corrphi = hit->GetPosition().Phi();
+    while(corrphi<0)
+      corrphi+=2*TMath::Pi();
+    while(corrphi>2*TMath::Pi())
+      corrphi-=2*TMath::Pi();
 
 
     Fill(Form("egamdc_s800phi_%s",oname.Data()),
@@ -905,35 +905,35 @@ double corrphi = hit->GetPosition().Phi();
 
 
 
-if(hit->GetPosition().Theta()<=1.265){
-    Fill(Form("egamdc_gretphifront_%s",oname.Data()),
-	 4000,0,4000,energy_dc,
-	 180,0,6.29,corrphi);
+    if(hit->GetPosition().Theta()<=1.265){
+      Fill(Form("egamdc_gretphifront_%s",oname.Data()),
+	   4000,0,4000,energy_dc,
+	   180,0,6.29,corrphi);
 
-Fill(Form("egamdc_gretthetafront_%s",oname.Data()),
-	 4000,0,4000,energy_dc,
-	 180,0,3.14159,hit->GetPosition().Theta());
+      Fill(Form("egamdc_gretthetafront_%s",oname.Data()),
+	   4000,0,4000,energy_dc,
+	   180,0,3.14159,hit->GetPosition().Theta());
 
-}
-else if(hit->GetPosition().Theta()>1.265){
-Fill(Form("egamdc_gretphiback_%s",oname.Data()),
-	 4000,0,4000,energy_dc,
-	 180,0,6.29,corrphi);
+    }
+    else if(hit->GetPosition().Theta()>1.265){
+      Fill(Form("egamdc_gretphiback_%s",oname.Data()),
+	   4000,0,4000,energy_dc,
+	   180,0,6.29,corrphi);
 
-Fill(Form("egamdc_gretthetaback_%s",oname.Data()),
-	 4000,0,4000,energy_dc,
-	 180,0,3.14159,hit->GetPosition().Theta());
+      Fill(Form("egamdc_gretthetaback_%s",oname.Data()),
+	   4000,0,4000,energy_dc,
+	   180,0,3.14159,hit->GetPosition().Theta());
 
-}
+    }
 
-Fill(Form("egamdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); //added
+    Fill(Form("egamdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); //added
 
 
 
   }
 
 
-//addback histos
+  //addback histos
   for(UShort_t g=0;g<gr->GetMultAB();g++){
     HitCalc* hit = gr->GetHitAB(g);
     float ehit = g;
@@ -941,23 +941,23 @@ Fill(Form("egamdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy
     float energy_dc = hit->GetDCEnergy();
 
     float dphi = hit->GetPosition().Phi() - track->GetPhi();  //offset added to dphi
-	while(dphi<0)
-	dphi+=2*TMath::Pi();
-      while(dphi>2*TMath::Pi())
-	dphi-=2*TMath::Pi();
+    while(dphi<0)
+      dphi+=2*TMath::Pi();
+    while(dphi>2*TMath::Pi())
+      dphi-=2*TMath::Pi();
 
-//added crdc event by event
+    //added crdc event by event
 
-  Fill(Form("hcrdc0xyeventAB_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(0)->GetY());
+    Fill(Form("hcrdc0xyeventAB_%s",oname.Data()),
+	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	 600,-300,300,s800->GetPAD(0)->GetY());
 
-  Fill(Form("hcrdc1xyeventAB_%s",oname.Data()),
-       fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
-       600,-300,300,s800->GetPAD(1)->GetY());
+    Fill(Form("hcrdc1xyeventAB_%s",oname.Data()),
+	 fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,
+	 600,-300,300,s800->GetPAD(1)->GetY());
 
 
-//added addback dc fw/bw plots
+    //added addback dc fw/bw plots
 
 
 
@@ -975,17 +975,17 @@ Fill(Form("egamdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy
       Fill(Form("egamAB_%s_tcut",oname.Data()),
 	   2000,0,4000,energy);
       Fill(Form("egamABdc_%s_tcut",oname.Data()),
-	  2000,0,2000,energy_dc);
+	   2000,0,2000,energy_dc);
       Fill(Form("egamABdc_ppar_%s_tcut",oname.Data()),
 	   2000,0,4000,energy_dc,
 	   fPP_range[0],fPP_range[1],fPP_range[2],track->GetPpar());
-Fill(Form("egamABdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); //added
+      Fill(Form("egamABdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,energy_dc); //added
 
 
 
 
 
-   }
+    }
   }
 
   Fill(Form("IC_vs_trackxfp_%s",oname.Data()),
@@ -1001,64 +1001,64 @@ Fill(Form("egamABdc_dphi_%s_tcut",oname.Data()), 63,0,6.3,dphi, 2000,0,2000,ener
   Fill(Form("scatter_%s",oname.Data()),
        500,0,0.5,track->GetTheta());
 
-// ata/bta/yta vs event added by ryan
+  // ata/bta/yta vs event added by ryan
 
-Fill(Form("ataevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetATA());
+  Fill(Form("ataevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetATA());
 
-Fill(Form("btaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetBTA());
+  Fill(Form("btaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,400,-200,200,track->GetBTA());
 
-Fill(Form("ytaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,4000,-200,200,track->GetYTA());
+  Fill(Form("ytaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10000,fentry,4000,-200,200,track->GetYTA());
 
   // Various gamma-gamma spectra with no additional gates.
 
-/* Gamma-Gamma! Thoryn 26/09/16
-  {
-    int highestg=-1;
-    double highesten =0;
-    for(UShort_t g=0;g<gr->GetMult();g++){
-      if(gr->GetHit(g)->GetEnergy()<1 || gr->GetHit(g)->GetEnergy()>6000)
-	continue;
-      if(gr->GetHit(g)->GetDCEnergy()>highesten){
-	highesten = gr->GetHit(g)->GetDCEnergy();
-	highestg =g;
-      }
-    }
-    for(UShort_t g=0;g<gr->GetMult();g++){
-      if(gr->GetHit(g)->GetEnergy()<1 || gr->GetHit(g)->GetEnergy()>6000)
-	continue;
-      if(highestg>-1 && g!=highestg){
-	Fill(Form("egamegamdc_fold_%s",oname.Data()),
-	     2000,0,4000,highesten,
-	     2000,0,4000,gr->GetHit(g)->GetDCEnergy());
-      }
-    }
-    highestg=-1;
-    highesten =0;
-    for(UShort_t g=0;g<gr->GetMultAB();g++){
-      if(gr->GetHitAB(g)->GetEnergy()<1 || gr->GetHitAB(g)->GetEnergy()>6000)
-	continue;
-      if(gr->GetHitAB(g)->GetDCEnergy()>highesten){
-	highesten = gr->GetHitAB(g)->GetDCEnergy();
-	highestg =g;
-      }
-    }
-    for(UShort_t g=0;g<gr->GetMultAB();g++){
-      if(gr->GetHitAB(g)->GetEnergy()<1 || gr->GetHitAB(g)->GetEnergy()>6000)
-	continue;
-      if(highestg>-1 && g!=highestg){
-	Fill(Form("egamegamABdc_fold_%s",oname.Data()),
-	     2000,0,4000,highesten,
-	     2000,0,4000,gr->GetHitAB(g)->GetDCEnergy());
-      }
-    }
-  }
+  /* Gamma-Gamma! Thoryn 26/09/16
+     {
+     int highestg=-1;
+     double highesten =0;
+     for(UShort_t g=0;g<gr->GetMult();g++){
+     if(gr->GetHit(g)->GetEnergy()<1 || gr->GetHit(g)->GetEnergy()>6000)
+     continue;
+     if(gr->GetHit(g)->GetDCEnergy()>highesten){
+     highesten = gr->GetHit(g)->GetDCEnergy();
+     highestg =g;
+     }
+     }
+     for(UShort_t g=0;g<gr->GetMult();g++){
+     if(gr->GetHit(g)->GetEnergy()<1 || gr->GetHit(g)->GetEnergy()>6000)
+     continue;
+     if(highestg>-1 && g!=highestg){
+     Fill(Form("egamegamdc_fold_%s",oname.Data()),
+     2000,0,4000,highesten,
+     2000,0,4000,gr->GetHit(g)->GetDCEnergy());
+     }
+     }
+     highestg=-1;
+     highesten =0;
+     for(UShort_t g=0;g<gr->GetMultAB();g++){
+     if(gr->GetHitAB(g)->GetEnergy()<1 || gr->GetHitAB(g)->GetEnergy()>6000)
+     continue;
+     if(gr->GetHitAB(g)->GetDCEnergy()>highesten){
+     highesten = gr->GetHitAB(g)->GetDCEnergy();
+     highestg =g;
+     }
+     }
+     for(UShort_t g=0;g<gr->GetMultAB();g++){
+     if(gr->GetHitAB(g)->GetEnergy()<1 || gr->GetHitAB(g)->GetEnergy()>6000)
+     continue;
+     if(highestg>-1 && g!=highestg){
+     Fill(Form("egamegamABdc_fold_%s",oname.Data()),
+     2000,0,4000,highesten,
+     2000,0,4000,gr->GetHitAB(g)->GetDCEnergy());
+     }
+     }
+     }
 
-*/
+  */
   for(UShort_t g1=0;g1<gr->GetMult();g1++){
     for(UShort_t g2=g1+1;g2<gr->GetMult();g2++){
       //Fill(Form("egamegamdc_%s",oname.Data()),
-	  // 1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
-	 //  1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
+      // 1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
+      //  1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
       Fill(Form("egamegamdc_sym_%s",oname.Data()),
 	   1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
 	   1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
@@ -1070,8 +1070,8 @@ Fill(Form("ytaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10
   for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
     for(UShort_t g2=g1+1;g2<gr->GetMultAB();g2++){
       //Fill(Form("egamegamABdc_%s",oname.Data()),
-	   //1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
-	   //1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
+      //1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
+      //1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
       Fill(Form("egamegamABdc_sym_%s",oname.Data()),
 	   4000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
 	   4000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
@@ -1082,115 +1082,115 @@ Fill(Form("ytaevent_%s",oname.Data()),fnentries/10000+1,0,(fnentries/10000+1)*10
   }
 
 
-//manually added time gate (Ryan). Using time cut file doesn't seem to work correctly
+  //manually added time gate (Ryan). Using time cut file doesn't seem to work correctly
 
-for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
+  for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
     for(UShort_t g2=g1+1;g2<gr->GetMultAB();g2++){
-	if((gr->GetHitAB(g1)->GetTime()>=-70 && gr->GetHitAB(g1)->GetTime()<=-55) && (gr->GetHitAB(g2)->GetTime()>=-70 && gr->GetHitAB(g2)->GetTime()<=-55)){
-	      //Fill(Form("egamegamABdc_%s",oname.Data()),
-		   //1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
-		   //1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
-	      Fill(Form("egamegamABdc_symtime_%s",oname.Data()),
-		   4000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
-		   4000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
-	      Fill(Form("egamegamABdc_symtime_%s",oname.Data()),
-		   4000,0,4000,gr->GetHitAB(g2)->GetDCEnergy(),
-		   4000,0,4000,gr->GetHitAB(g1)->GetDCEnergy());
-		}    
-	}
+      if((gr->GetHitAB(g1)->GetTime()>=-70 && gr->GetHitAB(g1)->GetTime()<=-55) && (gr->GetHitAB(g2)->GetTime()>=-70 && gr->GetHitAB(g2)->GetTime()<=-55)){
+	//Fill(Form("egamegamABdc_%s",oname.Data()),
+	//1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
+	//1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
+	Fill(Form("egamegamABdc_symtime_%s",oname.Data()),
+	     4000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
+	     4000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
+	Fill(Form("egamegamABdc_symtime_%s",oname.Data()),
+	     4000,0,4000,gr->GetHitAB(g2)->GetDCEnergy(),
+	     4000,0,4000,gr->GetHitAB(g1)->GetDCEnergy());
+      }    
+    }
   }
 
 
 
   /* Various gamma-gamma spectra with an additional time gate. Commented out by Thoryn 26/09/16
-  {
-    int highestg=-1;
-    double highesten =0;
-    for(UShort_t g=0;g<gr->GetMult();g++){
-      HitCalc* hit = gr->GetHit(g);
-      if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
-	continue;
-      if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
-	if(hit->GetDCEnergy()>highesten){
-	  highesten = hit->GetDCEnergy();
-	  highestg =g;
-	}
-      }
-    }
-    for(UShort_t g=0;g<gr->GetMult();g++){
-      HitCalc* hit = gr->GetHit(g);
-      if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
-	continue;
-      if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
-	if(highestg>-1 && g!=highestg){
-	  Fill(Form("egamegamdc_fold_%s_tcut",oname.Data()),
-	       2000,0,4000,highesten,
-	       2000,0,4000,hit->GetDCEnergy());
-	}
-      }
-    }
-    highestg=-1;
-    highesten =0;
-    for(UShort_t g=0;g<gr->GetMultAB();g++){
-      HitCalc* hit = gr->GetHitAB(g);
-      if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
-	continue;
-      if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
-	if(hit->GetDCEnergy()>highesten){
-	  highesten = hit->GetDCEnergy();
-	  highestg =g;
-	}
-      }
-    }
-    for(UShort_t g=0;g<gr->GetMultAB();g++){
-      HitCalc* hit = gr->GetHitAB(g);
-      if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
-	continue;
-      if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
-	if(highestg>-1 && g!=highestg){
-	  Fill(Form("egamegamABdc_fold_%s_tcut",oname.Data()),
-	       2000,0,4000,highesten,
-	       2000,0,4000,hit->GetDCEnergy());
-	}
-      }
-    }
-  }
-*/
+     {
+     int highestg=-1;
+     double highesten =0;
+     for(UShort_t g=0;g<gr->GetMult();g++){
+     HitCalc* hit = gr->GetHit(g);
+     if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
+     continue;
+     if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
+     if(hit->GetDCEnergy()>highesten){
+     highesten = hit->GetDCEnergy();
+     highestg =g;
+     }
+     }
+     }
+     for(UShort_t g=0;g<gr->GetMult();g++){
+     HitCalc* hit = gr->GetHit(g);
+     if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
+     continue;
+     if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
+     if(highestg>-1 && g!=highestg){
+     Fill(Form("egamegamdc_fold_%s_tcut",oname.Data()),
+     2000,0,4000,highesten,
+     2000,0,4000,hit->GetDCEnergy());
+     }
+     }
+     }
+     highestg=-1;
+     highesten =0;
+     for(UShort_t g=0;g<gr->GetMultAB();g++){
+     HitCalc* hit = gr->GetHitAB(g);
+     if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
+     continue;
+     if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
+     if(hit->GetDCEnergy()>highesten){
+     highesten = hit->GetDCEnergy();
+     highestg =g;
+     }
+     }
+     }
+     for(UShort_t g=0;g<gr->GetMultAB();g++){
+     HitCalc* hit = gr->GetHitAB(g);
+     if(hit->GetEnergy()<1 || hit->GetEnergy()>6000)
+     continue;
+     if(foundTCut && TimeCut->IsInside(hit->GetTime(),hit->GetEnergy())){
+     if(highestg>-1 && g!=highestg){
+     Fill(Form("egamegamABdc_fold_%s_tcut",oname.Data()),
+     2000,0,4000,highesten,
+     2000,0,4000,hit->GetDCEnergy());
+     }
+     }
+     }
+     }
+  */
 
-/* Thoryn 26/09/16
-  for(UShort_t g1=0;g1<gr->GetMult();g1++){
-    for(UShort_t g2=g1+1;g2<gr->GetMult();g2++){
-      if(foundTCut && TimeCut->IsInside(gr->GetHit(g1)->GetTime(),gr->GetHit(g1)->GetEnergy()) &&
-	 TimeCut->IsInside(gr->GetHit(g2)->GetTime(),gr->GetHit(g2)->GetEnergy())){
-	Fill(Form("egamegamdc_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
-	Fill(Form("egamegamdc_sym_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
-	Fill(Form("egamegamdc_sym_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHit(g2)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHit(g1)->GetDCEnergy());
-      }
-    }
-  }
-  for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
-    for(UShort_t g2=g1+1;g2<gr->GetMultAB();g2++){
-      if(foundTCut && TimeCut->IsInside(gr->GetHitAB(g1)->GetTime(),gr->GetHitAB(g1)->GetEnergy()) &&
-	 TimeCut->IsInside(gr->GetHitAB(g2)->GetTime(),gr->GetHitAB(g2)->GetEnergy())){
-	Fill(Form("egamegamABdc_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
-	Fill(Form("egamegamABdc_sym_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
-	Fill(Form("egamegamABdc_sym_%s_tcut",oname.Data()),
-	     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy(),
-	     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy());
-      }
-    }
-  }
-*/
+  /* Thoryn 26/09/16
+     for(UShort_t g1=0;g1<gr->GetMult();g1++){
+     for(UShort_t g2=g1+1;g2<gr->GetMult();g2++){
+     if(foundTCut && TimeCut->IsInside(gr->GetHit(g1)->GetTime(),gr->GetHit(g1)->GetEnergy()) &&
+     TimeCut->IsInside(gr->GetHit(g2)->GetTime(),gr->GetHit(g2)->GetEnergy())){
+     Fill(Form("egamegamdc_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
+     1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
+     Fill(Form("egamegamdc_sym_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHit(g1)->GetDCEnergy(),
+     1000,0,4000,gr->GetHit(g2)->GetDCEnergy());
+     Fill(Form("egamegamdc_sym_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHit(g2)->GetDCEnergy(),
+     1000,0,4000,gr->GetHit(g1)->GetDCEnergy());
+     }
+     }
+     }
+     for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
+     for(UShort_t g2=g1+1;g2<gr->GetMultAB();g2++){
+     if(foundTCut && TimeCut->IsInside(gr->GetHitAB(g1)->GetTime(),gr->GetHitAB(g1)->GetEnergy()) &&
+     TimeCut->IsInside(gr->GetHitAB(g2)->GetTime(),gr->GetHitAB(g2)->GetEnergy())){
+     Fill(Form("egamegamABdc_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
+     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
+     Fill(Form("egamegamABdc_sym_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy(),
+     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy());
+     Fill(Form("egamegamABdc_sym_%s_tcut",oname.Data()),
+     1000,0,4000,gr->GetHitAB(g2)->GetDCEnergy(),
+     1000,0,4000,gr->GetHitAB(g1)->GetDCEnergy());
+     }
+     }
+     }
+  */
 
 
   int hp = s800->GetRegistr();
@@ -1219,54 +1219,54 @@ for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
 	   fIC_range[0],fIC_range[1],fIC_range[2],ich->GetSum());
     }
     /*Fill(Form("x_vs_obj_%s",oname.Data()),
-	 fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_obj_%s",oname.Data()),
-	 fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_objC_%s",oname.Data()),
-	 fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_objC_%s",oname.Data()),
-	 fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_xfp_%s",oname.Data()),
-	 fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_xfp_%s",oname.Data()),
-	 fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_xfpC_%s",oname.Data()),
-	 fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_xfpC_%s",oname.Data()),
-	 fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
-	 100/2,-100,100,track->GetAFP());
+      fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_obj_%s",oname.Data()),
+      fobj_range[0],fobj_range[1],fobj_range[2],tof->GetOBJ(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_objC_%s",oname.Data()),
+      fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_objC_%s",oname.Data()),
+      fobjC_range[0],fobjC_range[1],fobjC_range[2],tof->GetOBJC(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_xfp_%s",oname.Data()),
+      fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_xfp_%s",oname.Data()),
+      fxfp_range[0],fxfp_range[1],fxfp_range[2],tof->GetXFP(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_xfpC_%s",oname.Data()),
+      fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_xfpC_%s",oname.Data()),
+      fxfpC_range[0],fxfpC_range[1],fxfpC_range[2],tof->GetXFPC(),
+      100/2,-100,100,track->GetAFP());
 
-    Fill(Form("x_vs_objtac_%s",oname.Data()),
-	 ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_objtac_%s",oname.Data()),
-	 ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_objtacC_%s",oname.Data()),
-	 ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_objtacC_%s",oname.Data()),
-	 ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_xfptac_%s",oname.Data()),
-	 ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_xfptac_%s",oname.Data()),
-	 ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
-	 100/2,-100,100,track->GetAFP());
-    Fill(Form("x_vs_xfptacC_%s",oname.Data()),
-	 ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-	 600/2,-300,300,pad[0]->GetX());
-    Fill(Form("afp_vs_xfptacC_%s",oname.Data()),
-	 ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
-	 100/2,-100,100,track->GetAFP()); */
+      Fill(Form("x_vs_objtac_%s",oname.Data()),
+      ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_objtac_%s",oname.Data()),
+      ftacobj_range[0],ftacobj_range[1],ftacobj_range[2],tof->GetTACOBJ(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_objtacC_%s",oname.Data()),
+      ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_objtacC_%s",oname.Data()),
+      ftacobjC_range[0],ftacobjC_range[1],ftacobjC_range[2],tof->GetTACOBJC(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_xfptac_%s",oname.Data()),
+      ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_xfptac_%s",oname.Data()),
+      ftacxfp_range[0],ftacxfp_range[1],ftacxfp_range[2],tof->GetTACXFP(),
+      100/2,-100,100,track->GetAFP());
+      Fill(Form("x_vs_xfptacC_%s",oname.Data()),
+      ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+      600/2,-300,300,pad[0]->GetX());
+      Fill(Form("afp_vs_xfptacC_%s",oname.Data()),
+      ftacxfpC_range[0],ftacxfpC_range[1],ftacxfpC_range[2],tof->GetTACXFPC(),
+      100/2,-100,100,track->GetAFP()); */
 
     Fill(Form("x_vs_objm_%s",oname.Data()),
 	 fmobj_range[0],fmobj_range[1],fmobj_range[2],tof->GetMOBJ(),
@@ -1294,11 +1294,11 @@ for(UShort_t g1=0;g1<gr->GetMultAB();g1++){
 	 100/2,-100,100,track->GetAFP());
   }
 
-float azitac = track->GetPhi();
-while(azitac<0)
-	azitac+=2*TMath::Pi();
-      while(azitac>2*TMath::Pi())
-	azitac-=2*TMath::Pi();
+  float azitac = track->GetPhi();
+  while(azitac<0)
+    azitac+=2*TMath::Pi();
+  while(azitac>2*TMath::Pi())
+    azitac-=2*TMath::Pi();
 
 
   Fill(Form("xfp_%s",oname.Data()),
@@ -1418,3 +1418,4 @@ while(azitac<0)
 void CalHistograms::FillHistogramsGateOnlyOut(GretinaCalc* gr, S800Calc* s800, Mode3Calc* m3c, const char* outname){
   //in case you have pure beam, fill here
 }
+ 

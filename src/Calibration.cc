@@ -254,14 +254,13 @@ void Calibration::ReadMap(const char* filename){
   Int_t ord;
   float co;
   char title[120];
-  char *ret;
   file = fopen(filename, "r");
   if(file == NULL){
     cout << "Sorry I couldn't find the map file: " << filename << endl;
     cout << "Will continue without the map file" << endl;
     return;
   }
-  ret = fgets(title, 120, file);
+  char *ret = fgets(title, 120, file);
   sscanf(title, "S800 inverse map - Brho=%g - M=%d - Q=%d", &fbrho, &fmass, &fcharge);
   if(fSett->VLevel()>0)
     cout << "brho " << fbrho << " mass " << fmass << " charge " << fcharge << endl;
@@ -471,11 +470,12 @@ void Calibration::BuildS800Calc(S800* in, S800Calc* out){
   BuildMTDCTof(&mtdc, &track, &tof);
   
   //SCINTILLATOR
+  /*
   bool scintgood[3] ={false,false,false};
   for(UShort_t s=0; s<3; s++){
     scintgood[s] = BuildScint(in->GetScintillator(s),&scint[s]);
   }
-
+  *///scintgood is not used.
   //set counters
   //if(scintgood[0]){ //set the counters if the scintillator is good (above threshold)
   if(icgood){ //set the counters if the IC is good 

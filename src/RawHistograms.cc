@@ -68,7 +68,7 @@ void RawHistograms::Write(){
   fhlist->Write();
 
   for(int i=0; i<16; i++){
-    cout << Form("counter[%2d]: %10d (%5.1f%) (%s,%s,%s,%s)",
+    cout << Form("counter[%2d]: %10d (%5.1f%%) (%s,%s,%s,%s)",
 		 i, fcounter[i],100.*fcounter[i]/fentry,
 		 (i/1)%2 ? "G2" : "  ",
 		 (i/2)%2 ? "S800" : "    ",

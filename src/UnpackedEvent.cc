@@ -1334,7 +1334,6 @@ void UnpackedEvent::WriteLastEvent(){
 double UnpackedEvent::GetRunTime(){
   //cout << __PRETTY_FUNCTION__ << endl;
   int n = -1;
-  int status = -1;
   long long int first = -1;
   long long int ts0 = -1;
   long long int tg0 = -1;
@@ -1346,7 +1345,7 @@ double UnpackedEvent::GetRunTime(){
   if (fwtree){
     n = ftr->GetEntries()-1;
     //cout << "number of events ftr->GetEntries()-1 = " << n << endl;
-    status = ftr->GetEvent(0);
+    int status = ftr->GetEvent(0);
     //cout << "status = ftr->GetEvent(0) = " << status << endl;
     if(fS800)
       ts0 = fS800->GetTS();
@@ -1387,7 +1386,7 @@ double UnpackedEvent::GetRunTime(){
   }
   if(fwcaltree){
     n = fcaltr->GetEntries()-1;
-    status = fcaltr->GetEvent(0);
+    int status = fcaltr->GetEvent(0);
     if(fS800Calc)
       ts0 = fS800Calc->GetTimeStamp();
     if(fGretinaCalc->GetMult()>0)
