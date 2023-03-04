@@ -1,1 +1,6 @@
 *~
+*.root
+*.o
+bin/
+lib/
+src/build/

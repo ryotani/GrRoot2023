@@ -38,7 +38,7 @@
 #pragma link off all globals;
 #pragma link off all classes;
 #pragma link off all functions;
-#pragma extra_include "Fit.hh"
+#pragma extra_include "Fit.hh";
 #pragma link C++ class S800Calc+;
 #pragma link C++ class PAD+;
 #pragma link C++ class PPAC+;

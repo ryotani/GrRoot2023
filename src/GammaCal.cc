@@ -207,7 +207,7 @@ int main(int argc, char* argv[]){
 	thresh = 0.09;
       nfound = sp->Search(hcore[core],5,"nobackground",thresh);
       
-      Float_t *xpeaks = sp->GetPositionX();
+      auto *xpeaks = sp->GetPositionX();
       //Float_t *ypeaks = sp->GetPositionY();
       if(HOutput){
 	HFile->cd();
@@ -226,7 +226,7 @@ int main(int argc, char* argv[]){
       for(int i=0;i<npeaks;i++){
 	for(int j=0;j<(npeaks-1);j++){
 	  if( xpeaks[j] > xpeaks[j+1] ){
-	    double temp = xpeaks[j];
+	    auto temp = xpeaks[j];
 	    int itemp = order[j];
 	    xpeaks[j] = xpeaks[j+1];
 	    order[j] = order[j+1];

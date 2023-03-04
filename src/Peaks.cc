@@ -57,7 +57,7 @@ void Peaks(TFile* file, char* name, char* OutputFile, int min, int max, int np, 
   sp->SetResolution(res);
   Int_t nfound = sp->Search(h,res,"nobackground",thresh);
   cout << "Found " << nfound << " peaks in spectrum" << endl;
-  Float_t *xpeaks = sp->GetPositionX();
+  auto *xpeaks = sp->GetPositionX();
   npeaks = 0;
   
   TF1 *bgline = new TF1("bgline","pol1",binmin,binmax);
@@ -71,7 +71,7 @@ void Peaks(TFile* file, char* name, char* OutputFile, int min, int max, int np, 
     par[1] = 0.;
   }
   for(p=0;p<nfound;p++){
-    Float_t xp = xpeaks[p];
+    auto xp = xpeaks[p];
     Int_t bin = h->GetXaxis()->FindBin(xp);
     Float_t yp = h->GetBinContent(bin);
     cout << " xpos " << xp << endl;
@@ -164,7 +164,7 @@ void indivPeaks(TFile* file, char* name, char* OutputFile, int min, int max, int
   sp->SetResolution(res);
   Int_t nfound = sp->Search(h,res,"nobackground",thresh);
   cout << "Found " << nfound << " peaks in spectrum" << endl;
-  Float_t *xpeaks = sp->GetPositionX();
+  auto *xpeaks = sp->GetPositionX();
   npeaks = 0;
   
   int peaksused=0;
@@ -172,7 +172,7 @@ void indivPeaks(TFile* file, char* name, char* OutputFile, int min, int max, int
   vector<TF1*> fit;
   fit.resize(nfound);
   for (p=0;p<nfound;p++){
-    Float_t xp = xpeaks[p];
+    auto xp = xpeaks[p];
     Int_t bin = h->GetXaxis()->FindBin(xp);
     Float_t yp = h->GetBinContent(bin);
     cout << " xpos " << xp << endl;
@@ -266,7 +266,7 @@ void Find(TFile* file, char* name, char* OutputFile, int min, int max, int np, d
   sp->SetResolution(res);
   Int_t nfound = sp->Search(h,res,"nobackground",thresh);
   cout << "Found " << nfound << " peaks in spectrum" << endl;
-  Float_t *xpeaks = sp->GetPositionX();
+  auto *xpeaks = sp->GetPositionX();
   TFile* HFile = new TFile(hfile,"update");
 
   string ringstrip = NULL;
